@@ -174,7 +174,7 @@ taken_html = f"""
 </div>
 """
 title_html_taken = """
-<h1 style="font-size: 18px; font-weight: bold; text-align: center;">HITS</h1>
+<h1 style="font-size: 18px; font-weight: bold; text-align: center;">ORDERS TAKEN</h1>
 """
 
 influenced_main_df = style_df(influenced)
@@ -186,7 +186,7 @@ influenced_html = f"""
 </div>
 """
 title_html_influenced = """
-<h1 style="font-size: 18px; font-weight: bold; text-align: center;">HITS</h1>
+<h1 style="font-size: 18px; font-weight: bold; text-align: center;">ORDERS INFLUENCED</h1>
 """
 
 
@@ -213,5 +213,5 @@ with colC[0]:
     st.markdown(taken_html, unsafe_allow_html=True)
 
 with colD[0]:
-    st.markdown(influenced_html_hits, unsafe_allow_html=True)
+    st.markdown(title_html_influenced, unsafe_allow_html=True)
     st.markdown(influenced_html, unsafe_allow_html=True)
