@@ -115,8 +115,6 @@ def style_df(df, font_size='14px'):
             {'selector': 'table',
              'props': [('border-collapse', 'collapse'), ('border-spacing', '0'), ('border', '0')]}
         ])
-    # Ocultar o índice
-    styler = styler.hide(axis='index')
 
     return styler
 
@@ -135,29 +133,6 @@ hits_html = f"""
 title_html_hits = """
 <h1 style="font-size: 18px; font-weight: bold; text-align: center;">HITS</h1>
 """
-
-#------------------------------------------------------------------------------------------------------
-## Styler
-
-def style_df(df, font_size='14px'):
-
-    # Criar o Styler
-    styler = df.style.format(na_rep="-", precision=0)\
-        .set_table_styles([
-            # Estilo do cabeçalho
-            {'selector': 'thead th',
-             'props': [('background-color', '#1af07e'), ('color', 'black'), ('font-weight', 'bold'), ('text-align', 'center')]},
-            # Estilo da fonte e tamanho para toda a tabela
-            {'selector': 'table, th, td',
-             'props': [('font-size', font_size), ('text-align', 'center')]}, 
-            # Removendo linhas de grade
-            {'selector': 'table',
-             'props': [('border-collapse', 'collapse'), ('border-spacing', '0'), ('border', '0')]}
-        ])
-    # Ocultar o índice
-    styler = styler.hide(axis='index')
-
-    return styler
 
 #------------------------------------------------------------------------------------------------------
 
