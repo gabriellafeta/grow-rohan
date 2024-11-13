@@ -97,6 +97,37 @@ current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
 
 hits = hits.dropna(how='all')
 hits = hits.sort_index()
+
+taken = current_week.pivot_table(
+    index='USER_ID', 
+    columns='day_date', 
+    values='order_taken', 
+    aggfunc='sum', 
+    fill_value=0
+)
+
+max_week = grow_data_df['week_ref'].max()
+current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
+
+
+taken = taken.dropna(how='all')
+taken = taken.sort_index()
+
+influenced = current_week.pivot_table(
+    index='USER_ID', 
+    columns='day_date', 
+    values='orders_influenced', 
+    aggfunc='sum', 
+    fill_value=0
+)
+
+max_week = grow_data_df['week_ref'].max()
+current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
+
+
+influenced = influenced.dropna(how='all')
+influenced = influenced.sort_index()
+
 #------------------------------------------------------------------------------------------------------
 ## Styler
 
@@ -134,11 +165,38 @@ title_html_hits = """
 <h1 style="font-size: 18px; font-weight: bold; text-align: center;">HITS</h1>
 """
 
+taken_main_df = style_df(taken)
+taken_html_df = taken_main_df.to_html()
+
+taken_html = f"""
+<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    {taken_html_df}
+</div>
+"""
+title_html_taken = """
+<h1 style="font-size: 18px; font-weight: bold; text-align: center;">HITS</h1>
+"""
+
+influenced_main_df = style_df(influenced)
+influenced_html_df = influenced_main_df.to_html()
+
+influenced_html = f"""
+<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    {influenced_html_df}
+</div>
+"""
+title_html_influenced = """
+<h1 style="font-size: 18px; font-weight: bold; text-align: center;">HITS</h1>
+"""
+
+
+
 #------------------------------------------------------------------------------------------------------
 
 colA_1 = st.columns(1)
-colB_1 = st.columns(1)
 colB = st.columns(1)
+colC = st.columns(1)
+colC = st.columns(1)
 
 
 
@@ -149,3 +207,11 @@ with colA_1[0]:
 with colB[0]:
     st.markdown(title_html_hits, unsafe_allow_html=True)
     st.markdown(hits_html, unsafe_allow_html=True)
+
+with colC[0]:
+    st.markdown(title_html_taken, unsafe_allow_html=True)
+    st.markdown(taken_html, unsafe_allow_html=True)
+
+with colD[0]:
+    st.markdown(influenced_html_hits, unsafe_allow_html=True)
+    st.markdown(influenced_html, unsafe_allow_html=True)
