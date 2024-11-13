@@ -196,7 +196,7 @@ title_html_influenced = """
 colA_1 = st.columns(1)
 colB = st.columns(1)
 colC = st.columns(1)
-colC = st.columns(1)
+colD = st.columns(1)
 
 
 
