@@ -80,10 +80,10 @@ current_day = current_timestamp.day
 current_month_name = current_timestamp.strftime('%B')
 
 
-max_week = grow_data_df['week_ref'].max()
-current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
+## max_week = grow_data_df['week_ref'].max()
+## current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
 
-hits = current_week.pivot_table(
+hits = grow_data_df.pivot_table(
     index='USER_ID', 
     columns='day_date', 
     values='hits', 
@@ -98,7 +98,7 @@ current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
 hits = hits.dropna(how='all')
 hits = hits.sort_index()
 
-taken = current_week.pivot_table(
+taken = grow_data_df.pivot_table(
     index='USER_ID', 
     columns='day_date', 
     values='order_taken', 
@@ -113,7 +113,7 @@ current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
 taken = taken.dropna(how='all')
 taken = taken.sort_index()
 
-influenced = current_week.pivot_table(
+influenced = grow_data_df.pivot_table(
     index='USER_ID', 
     columns='day_date', 
     values='orders_influenced', 
