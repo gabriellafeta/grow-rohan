@@ -30,13 +30,16 @@ blob_client_logo = blob_service_client.get_blob_client(container=container_name,
 blob_content_logo = blob_client_logo.download_blob().readall()
 
 
-col1, col2 = st.columns([1, 5])
+col1, col2, col3 = st.columns([1, 5])
 
 with col1:
     st.image(blob_content_logo, use_column_width=True)
 
 with col2:
     st.title("GROW KPI's")
+
+with col3:
+    st.subtitle("Curren")
 
 
 #------------------------------------------------------------------------------------------------------
@@ -62,6 +65,9 @@ blob_content_logo = blob_client_logo.download_blob().readall()
 #------------------------------------------------------------------------------------------------------
 ## Weekly table
 
+current_timestamp = grow_data_df['day_date'].max() + pd.Timedelta(days=1)
+current_day = current_timestamp.day
+current_month_name = current_timestamp.strftime('%B')
 
 current_timestamp = grow_data_df['day_date'].max()
 current_timestamp = datetime.strptime(current_timestamp, '%Y-%m-%d')
@@ -79,6 +85,81 @@ hits = current_week.pivot_table(
     aggfunc='sum', 
     fill_value=0
 )
+
+max_week = grow_data_df['week_ref'].max()
+current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
+
+
+hits = hits.dropna(how='all')
+hits = hits.sort_index()
+
+hits = current_week.pivot_table(
+    index='USER_ID', 
+    columns='day_date', 
+    values='hits', 
+    aggfunc='sum', 
+    fill_value=0
+)
+#------------------------------------------------------------------------------------------------------
+## Styler
+
+def style_df(df, font_size='14px'):
+
+    # Criar o Styler
+    styler = df.style.format(na_rep="-", precision=0)\
+        .set_table_styles([
+            # Estilo do cabeçalho
+            {'selector': 'thead th',
+             'props': [('background-color', '#1af07e'), ('color', 'black'), ('font-weight', 'bold'), ('text-align', 'center')]},
+            # Estilo da fonte e tamanho para toda a tabela
+            {'selector': 'table, th, td',
+             'props': [('font-size', font_size), ('text-align', 'center')]}, 
+            # Removendo linhas de grade
+            {'selector': 'table',
+             'props': [('border-collapse', 'collapse'), ('border-spacing', '0'), ('border', '0')]}
+        ])
+    # Ocultar o índice
+    styler = styler.hide(axis='index')
+
+    return styler
+
+
+
+#------------------------------------------------------------------------------------------------------
+
+hits_main_df = style_df(hits)
+hits_html_df = hits_main_df.to_html()
+
+hits_html = f"""
+<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    {hits_html_df}
+</div>
+"""
+
+
+#------------------------------------------------------------------------------------------------------
+
+colA_1 = st.columns(1)
+colB_1 = st.columns(1)
+colB = st.columns(1)
+
+
+
+
+with colA_1[0]:
+    st.markdown(f"<i style='font-size: smaller;'>Update up to {current_day - 1}th of {current_month_name}</i>", unsafe_allow_html=True)
+
+with colB[0]:
+    st.markdown(hits, unsafe_allow_html=True)
+
+
+
+
+
+
+
+
+
 
 hits = hits.dropna(how='all')
 hits = hits.sort_index()
@@ -134,11 +215,4 @@ with colA_1[0]:
 
 with colB[0]:
     st.markdown(hits, unsafe_allow_html=True)
-
-
-
-
-
-
-
 
