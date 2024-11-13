@@ -192,11 +192,11 @@ def style_df(df, font_size='14px'):
 #------------------------------------------------------------------------------------------------------
 
 hits_main_df = style_df(hits)
-hits_html = hits_main_df.to_html()
+hits_html_df = hits_main_df.to_html()
 
 hits_html = f"""
 <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-    {hits_html}
+    {hits_html_df}
 </div>
 """
 
