@@ -30,16 +30,13 @@ blob_client_logo = blob_service_client.get_blob_client(container=container_name,
 blob_content_logo = blob_client_logo.download_blob().readall()
 
 
-col1, col2, col3 = st.columns([1, 5])
+col1, col2 = st.columns([1, 5])
 
 with col1:
     st.image(blob_content_logo, use_column_width=True)
 
 with col2:
     st.title("GROW KPI's")
-
-with col3:
-    st.subtitle("Curren")
 
 
 #------------------------------------------------------------------------------------------------------
