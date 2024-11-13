@@ -169,7 +169,7 @@ colB = st.columns(1)
 
 
 with colA_1[0]:
-    st.markdown(f"<i style='font-size: smaller;'>Update up to {current_day - 1}th of {current_month_name}</i>", unsafe_allow_html=True)
+    st.markdown(f"<i style='font-size: smaller;'>Update up to {current_day}th of {current_month_name}</i>", unsafe_allow_html=True)
 
 with colB[0]:
     st.markdown(title_html_hits, unsafe_allow_html=True)
