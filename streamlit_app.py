@@ -62,7 +62,7 @@ blob_content_logo = blob_client_logo.download_blob().readall()
 #------------------------------------------------------------------------------------------------------
 ## Weekly table
 
-current_timestamp = grow_data_df['day_date'].max() + pd.Timedelta(days=1)
+current_timestamp = grow_data_df['day_date'].max()
 current_day = current_timestamp.day
 current_month_name = current_timestamp.strftime('%B')
 
