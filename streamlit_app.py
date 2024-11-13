@@ -30,16 +30,13 @@ blob_client_logo = blob_service_client.get_blob_client(container=container_name,
 blob_content_logo = blob_client_logo.download_blob().readall()
 
 
-col1, col2, col3 = st.columns([1, 5])
+col1, col2= st.columns([1, 5])
 
 with col1:
     st.image(blob_content_logo, use_column_width=True)
 
 with col2:
     st.title("GROW KPI's")
-
-with col3:
-    st.subtitle("Curren")
 
 
 #------------------------------------------------------------------------------------------------------
@@ -65,7 +62,8 @@ blob_content_logo = blob_client_logo.download_blob().readall()
 #------------------------------------------------------------------------------------------------------
 ## Weekly table
 
-current_timestamp = grow_data_df['day_date'].max() + pd.Timedelta(days=1)
+current_timestamp = grow_data_df['day_date'].max()
+current_timestamp = datetime.strptime(current_timestamp, '%Y-%m-%d')
 current_day = current_timestamp.day
 current_month_name = current_timestamp.strftime('%B')
 
