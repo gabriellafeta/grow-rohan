@@ -15,7 +15,7 @@ st.set_page_config(layout="wide") # Configuração da página larga
 #------------------------------------------------------------------------------------------------------
 # Uploading data
 
-connection_string = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
+connection_string = "DefaultEndpointsProtocol=https;AccountName=beesexpansion0001;AccountKey=QBAsqeUnSwNe7hKHJwWrKfH1XE0LpERqc/N/x5jg51pKCvoOgaZw0NvIgxKwyciZ2JxnnjdBbu0b+ASt9jRAaA==;EndpointSuffix=core.windows.net"
 
 if connection_string is None:
     raise Exception("Environment variable AZURE_STORAGE_CONNECTION_STRING is not set.")
@@ -36,7 +36,7 @@ with col1:
     st.image(blob_content_logo, use_column_width=True)
 
 with col2:
-    st.title("BEES Sales Leaderboard Report")
+    st.title("GROW KPI's")
 
 
 #------------------------------------------------------------------------------------------------------
@@ -56,20 +56,6 @@ sales_incentive_df = pd.read_csv(sales_incentive)
 bees_logo = "bezinho.jpg"
 blob_client_logo = blob_service_client.get_blob_client(container=container_name, blob=bees_logo)
 blob_content_logo = blob_client_logo.download_blob().readall()
-
-
-
-#------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-#------------------------------------------------------------------------------------------------------
-
 
 
 
