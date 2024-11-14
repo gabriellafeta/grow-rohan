@@ -105,12 +105,8 @@ hits_week = grow_data_df.pivot_table(
     fill_value=0
 )
 
-hits_week = hits.dropna(how='all')
-hits_week = hits.sort_index()
-
-
-
-
+hits_week = hits_week.dropna(how='all')
+hits_week = hits_week.sort_index()
 
 
 
