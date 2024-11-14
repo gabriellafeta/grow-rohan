@@ -135,14 +135,6 @@ taken_week = grow_data_df.pivot_table(
 taken_week = taken_week.dropna(how='all')
 taken_week = taken_week.sort_index()
 
-
-
-
-
-
-
-
-
 influenced = grow_data_df.pivot_table(
     index='USER_ID', 
     columns='day_date', 
@@ -157,6 +149,22 @@ current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
 
 influenced = influenced.dropna(how='all')
 influenced = influenced.sort_index()
+
+
+influenced_week = grow_data_df.pivot_table(
+    index='USER_ID', 
+    columns='Week', 
+    values='orders_influenced', 
+    aggfunc='sum', 
+    fill_value=0
+)
+
+influenced_week = influenced_week.dropna(how='all')
+influenced_week = influenced_week.sort_index()
+
+
+
+
 
 #------------------------------------------------------------------------------------------------------
 ## Styler
@@ -195,7 +203,7 @@ title_html_hits = """
 <h1 style="font-size: 18px; font-weight: bold; text-align: center;">HITS</h1>
 """
 title_html_hits_day = """
-<h1 style="font-size: 12px; font-weight: bold; text-align: left;">Daily</h1>
+<h1 style="font-size: 18px; font-weight: bold; text-align: left;">Daily</h1>
 """
 
 hits_week_df = style_df(hits_week)
@@ -207,7 +215,7 @@ hits_week_html = f"""
 </div>
 """
 title_html_hits_week = """
-<h1 style="font-size: 12px; font-weight: bold; text-align: left;">Weekly</h1>
+<h1 style="font-size: 18px; font-weight: bold; text-align: left;">Weekly</h1>
 """
 #---------------------------------------------------------------------------------------------------------
 taken_main_df = style_df(taken)
@@ -231,27 +239,12 @@ taken_week_html = f"""
 </div>
 """
 title_html_taken_week = """
-<h1 style="font-size: 12px; font-weight: bold; text-align: left;">Weekly</h1>
+<h1 style="font-size: 18px; font-weight: bold; text-align: left;">Weekly</h1>
 """
 title_html_taken_day = """
-<h1 style="font-size: 12px; font-weight: bold; text-align: left;">Daily</h1>
+<h1 style="font-size: 18px; font-weight: bold; text-align: left;">Daily</h1>
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#---------------------------------------------------------------------------------------------------------
 
 influenced_main_df = style_df(influenced)
 influenced_html_df = influenced_main_df.to_html()
@@ -265,6 +258,20 @@ title_html_influenced = """
 <h1 style="font-size: 18px; font-weight: bold; text-align: center;">ORDERS INFLUENCED</h1>
 """
 
+influenced_main_df_week = style_df(influenced_week)
+influenced_html_df_week = influenced_main_df_week.to_html()
+
+influenced_html_week = f"""
+<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    {influenced_html_df_week}
+</div>
+"""
+title_html_influenced_week = """
+<h1 style="font-size: 18px; font-weight: bold; text-align: left;">Weekly</h1>
+"""
+title_html_influenced_day = """
+<h1 style="font-size: 18px; font-weight: bold; text-align: left;">Daily</h1>
+"""
 
 
 #------------------------------------------------------------------------------------------------------
@@ -296,4 +303,7 @@ with colC[0]:
 
 with colD[0]:
     st.markdown(title_html_influenced, unsafe_allow_html=True)
+    st.markdown(title_html_influenced_day, unsafe_allow_html=True)
     st.markdown(influenced_html, unsafe_allow_html=True)
+    st.markdown(title_html_influenced_week, unsafe_allow_html=True)
+    st.markdown(influenced_html_df_week, unsafe_allow_html=True)
