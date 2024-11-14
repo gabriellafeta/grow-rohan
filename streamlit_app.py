@@ -109,10 +109,6 @@ hits_week = hits_week.dropna(how='all')
 hits_week = hits_week.sort_index()
 
 
-
-
-
-
 taken = grow_data_df.pivot_table(
     index='USER_ID', 
     columns='day_date', 
@@ -127,6 +123,25 @@ current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
 
 taken = taken.dropna(how='all')
 taken = taken.sort_index()
+
+taken_week = grow_data_df.pivot_table(
+    index='USER_ID', 
+    columns='Week', 
+    values='order_taken', 
+    aggfunc='sum', 
+    fill_value=0
+)
+
+taken_week = taken_week.dropna(how='all')
+taken_week = taken_week.sort_index()
+
+
+
+
+
+
+
+
 
 influenced = grow_data_df.pivot_table(
     index='USER_ID', 
@@ -194,12 +209,7 @@ hits_week_html = f"""
 title_html_hits_week = """
 <h1 style="font-size: 12px; font-weight: bold; text-align: left;">Weekly</h1>
 """
-
-
-
-
-
-
+#---------------------------------------------------------------------------------------------------------
 taken_main_df = style_df(taken)
 taken_html_df = taken_main_df.to_html()
 
@@ -211,6 +221,37 @@ taken_html = f"""
 title_html_taken = """
 <h1 style="font-size: 18px; font-weight: bold; text-align: center;">ORDERS TAKEN</h1>
 """
+
+taken_week_df = style_df(taken_week)
+taken_html_df_week = taken_week_df.to_html()
+
+taken_week_html = f"""
+<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    {taken_html_df_week}
+</div>
+"""
+title_html_taken_week = """
+<h1 style="font-size: 12px; font-weight: bold; text-align: left;">Weekly</h1>
+"""
+title_html_taken_day = """
+<h1 style="font-size: 12px; font-weight: bold; text-align: left;">Daily</h1>
+"""
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 influenced_main_df = style_df(influenced)
 influenced_html_df = influenced_main_df.to_html()
@@ -248,7 +289,10 @@ with colB[0]:
 
 with colC[0]:
     st.markdown(title_html_taken, unsafe_allow_html=True)
+    st.markdown(title_html_taken_day, unsafe_allow_html=True)
     st.markdown(taken_html, unsafe_allow_html=True)
+    st.markdown(title_html_taken_week, unsafe_allow_html=True)
+    st.markdown(taken_week_html, unsafe_allow_html=True)
 
 with colD[0]:
     st.markdown(title_html_influenced, unsafe_allow_html=True)
