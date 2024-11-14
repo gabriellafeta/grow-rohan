@@ -83,11 +83,22 @@ current_month_name = current_timestamp.strftime('%B')
 max_month = grow_data_df['month_ref'].max()
 grow_data_df = grow_data_df[grow_data_df['month_ref'] == max_month]
 
+email_to_name = {
+    "ocsicaviteteleseller2@gmail.com": "Khya",
+    "ocsicaviteteleseller3@gmail.com": "Laarnie",
+    "ocsicaviteteleseller4@gmail.com": "Belle",
+    "ocsicaviteteleseller6@gmail.com": "Andrea",
+    "ocsicaviteteleseller@gmail.com": "Patrice"
+}
+
+grow_data_df['Agent'] = grow_data_df['USER_ID'].map(email_to_name)
+
+
 ## max_week = grow_data_df['week_ref'].max()
 ## current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
 
 hits = grow_data_df.pivot_table(
-    index='USER_ID', 
+    index='Agent', 
     columns='day_date', 
     values='hits', 
     aggfunc='sum', 
@@ -98,7 +109,7 @@ hits = hits.dropna(how='all')
 hits = hits.sort_index()
 
 hits_week = grow_data_df.pivot_table(
-    index='USER_ID', 
+    index='Agent', 
     columns='Week', 
     values='hits', 
     aggfunc='sum', 
@@ -110,7 +121,7 @@ hits_week = hits_week.sort_index()
 
 
 taken = grow_data_df.pivot_table(
-    index='USER_ID', 
+    index='Agent', 
     columns='day_date', 
     values='order_taken', 
     aggfunc='sum', 
@@ -125,7 +136,7 @@ taken = taken.dropna(how='all')
 taken = taken.sort_index()
 
 taken_week = grow_data_df.pivot_table(
-    index='USER_ID', 
+    index='Agent', 
     columns='Week', 
     values='order_taken', 
     aggfunc='sum', 
@@ -136,7 +147,7 @@ taken_week = taken_week.dropna(how='all')
 taken_week = taken_week.sort_index()
 
 influenced = grow_data_df.pivot_table(
-    index='USER_ID', 
+    index='Agent', 
     columns='day_date', 
     values='orders_influenced', 
     aggfunc='sum', 
@@ -152,7 +163,7 @@ influenced = influenced.sort_index()
 
 
 influenced_week = grow_data_df.pivot_table(
-    index='USER_ID', 
+    index='Agent', 
     columns='Week', 
     values='orders_influenced', 
     aggfunc='sum', 
