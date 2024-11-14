@@ -80,6 +80,9 @@ current_day = current_timestamp.day
 current_month_name = current_timestamp.strftime('%B')
 
 
+max_month = grow_data_df['month_ref'].max()
+grow_data_df = grow_data_df[grow_data_df['month_ref'] == max_month]
+
 ## max_week = grow_data_df['week_ref'].max()
 ## current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
 
@@ -91,12 +94,28 @@ hits = grow_data_df.pivot_table(
     fill_value=0
 )
 
-max_week = grow_data_df['week_ref'].max()
-current_week = grow_data_df[grow_data_df['week_ref'] == max_week]
-
-
 hits = hits.dropna(how='all')
 hits = hits.sort_index()
+
+hits_week = grow_data_df.pivot_table(
+    index='USER_ID', 
+    columns='Week', 
+    values='hits', 
+    aggfunc='sum', 
+    fill_value=0
+)
+
+hits_week = hits.dropna(how='all')
+hits_week = hits.sort_index()
+
+
+
+
+
+
+
+
+
 
 taken = grow_data_df.pivot_table(
     index='USER_ID', 
@@ -164,6 +183,26 @@ hits_html = f"""
 title_html_hits = """
 <h1 style="font-size: 18px; font-weight: bold; text-align: center;">HITS</h1>
 """
+title_html_hits_day = """
+<h1 style="font-size: 12px; font-weight: bold; text-align: left;">Daily</h1>
+"""
+
+hits_week_df = style_df(hits_week)
+hits_week_html_df = hits_week_df.to_html()
+
+hits_week_html = f"""
+<div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+    {hits_week_html_df}
+</div>
+"""
+title_html_hits_week = """
+<h1 style="font-size: 12px; font-weight: bold; text-align: left;">Weekly</h1>
+"""
+
+
+
+
+
 
 taken_main_df = style_df(taken)
 taken_html_df = taken_main_df.to_html()
@@ -206,7 +245,10 @@ with colA_1[0]:
 
 with colB[0]:
     st.markdown(title_html_hits, unsafe_allow_html=True)
+    st.markdown(title_html_hits_day, unsafe_allow_html=True)
     st.markdown(hits_html, unsafe_allow_html=True)
+    st.markdown(title_html_hits_week, unsafe_allow_html=True)
+    st.markdown(hits_week_html, unsafe_allow_html=True)
 
 with colC[0]:
     st.markdown(title_html_taken, unsafe_allow_html=True)
