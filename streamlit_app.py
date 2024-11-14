@@ -306,4 +306,4 @@ with colD[0]:
     st.markdown(title_html_influenced_day, unsafe_allow_html=True)
     st.markdown(influenced_html, unsafe_allow_html=True)
     st.markdown(title_html_influenced_week, unsafe_allow_html=True)
-    st.markdown(influenced_html_df_week, unsafe_allow_html=True)
+    st.markdown(influenced_html_week, unsafe_allow_html=True)
